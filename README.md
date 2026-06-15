@@ -8,22 +8,22 @@ YOLO11-FR is an improved YOLO11-based object detection method for bridge crack d
 
 ## Overview
 
-Bridge cracks are usually thin, irregular, and easily confused with concrete texture, stains, shadows, and other surface defects. YOLO11-FR was developed to improve crack-oriented detection by introducing two task-specific modules:
+Bridge cracks are usually thin, irregular, and easily confused with concrete texture, stains, shadows, and other surface defects. YOLO11-FR was developed to improve crack detection performance by introducing two task-oriented modules:
 
-- **FFCM**: a frequency-domain feature fusion module for refining high-level crack features.
-- **REEM**: an edge enhancement module for strengthening crack boundary and structural representations at multiple detection scales.
+* **FFCM**: a frequency-domain feature fusion module for refining high-level crack features.
+* **REEM**: an edge enhancement module for strengthening crack boundary and structural representations at multiple detection scales.
 
-This repository includes the model implementation, configuration files, and dataset construction/conversion scripts used in the manuscript.
+This repository includes the modified YOLO11 source code, model configuration files, and dataset conversion scripts used in the manuscript.
 
 ## Repository structure
 
 ```text
 YOLO11-FR/
 ├── README.md
-├── LICENSE.txt
-├── requirements.txt
+├── LICENSE
 ├── CITATION.cff
 ├── CONTRIBUTING.md
+├── requirements.txt
 ├── docs/
 │   └── dataset_preparation.md
 ├── tools/
@@ -43,7 +43,10 @@ YOLO11-FR/
             ├── FFCM.py
             ├── REEM.py
             ├── REEM_noStripe.py
-            └── BDYOLO.py
+            ├── __init__.py
+            ├── block.py
+            ├── conv.py
+            └── head.py
 ```
 
 ## Environment
@@ -67,13 +70,13 @@ To ensure that the modified local `ultralytics/` source code is used, run comman
 
 ## Model configurations
 
-The model configuration files are located in:
+The YOLO11-FR model configuration files are located in:
 
 ```text
 ultralytics/cfg/models/11/
 ```
 
-The main configuration files are:
+The main configuration files include:
 
 ```text
 yolo11_FFCM.yaml
@@ -102,7 +105,6 @@ Key files include:
 FFCM.py
 REEM.py
 REEM_noStripe.py
-BDYOLO.py
 ```
 
 The model parsing logic is integrated through:
@@ -260,9 +262,13 @@ Example command:
 yolo detect train model=ultralytics/cfg/models/11/yolo11_FFCM_REEM.yaml data=path/to/GYU_DET_Crack.yaml epochs=100 imgsz=640 batch=16 seed=1
 ```
 
+## Notes on pretrained weights
+
+This repository does not include pretrained model weights or trained checkpoint files. Official YOLO11 pretrained weights can be obtained through the Ultralytics framework when required. Trained weights generated during experiments should be saved separately and are not redistributed in this repository.
+
 ## Code availability
 
-The author-generated code used for implementing YOLO11-FR, dataset construction, Crack500 conversion, training, evaluation, and ablation experiments is provided in this repository.
+The author-generated code used for implementing YOLO11-FR, dataset construction, Crack500 conversion, training, evaluation, ablation experiments, and repeated-seed experiments is provided in this repository.
 
 The public datasets used in the study are not redistributed in this repository and should be downloaded from their original public sources cited in the manuscript.
 
@@ -276,6 +282,6 @@ Zhang Y, Tian B, Guo H. YOLO11-FR: A bridge crack detection method based on freq
 
 ## License
 
-This project is released under the license provided in the `LICENSE.txt` file.
+This project is released under the license provided in the `LICENSE` file.
 
 This repository includes modified code based on the Ultralytics YOLO framework. Please also follow the license terms of the original Ultralytics project when using or redistributing this code.
