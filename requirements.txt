@@ -1,0 +1,25 @@
+# Core deep learning dependencies
+# Note: install the PyTorch/CUDA version that matches your local GPU environment.
+torch==2.5.1
+torchvision
+
+# Computer vision and numerical computing
+opencv-python
+numpy
+scipy
+pillow
+matplotlib
+pandas
+scikit-learn
+
+# Utilities
+pyyaml
+tqdm
+requests
+psutil
+
+# FLOPs / model profiling
+fvcore
+
+# Install the local modified Ultralytics package with:
+# pip install -e .

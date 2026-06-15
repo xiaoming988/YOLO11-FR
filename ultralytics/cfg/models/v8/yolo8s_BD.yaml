@@ -1,0 +1,47 @@
+# BD-YOLOv8s practical reproduction for Ultralytics
+# Components based on the BD-YOLOv8s description: ODConv + CBAM + CARAFE.
+# Put this file at: ultralytics/cfg/models/v8/yolo8s_BD.yaml
+
+nc: 1
+scale: s
+scales:
+  n: [0.33, 0.25, 1024]
+  s: [0.33, 0.50, 1024]
+  m: [0.67, 0.75, 768]
+  l: [1.00, 1.00, 512]
+  x: [1.00, 1.25, 512]
+
+# YOLOv8s backbone with ODConv in the second Conv layer and CBAM after the first two C2f blocks
+backbone:
+  - [-1, 1, Conv, [64, 3, 2]]        # 0-P1/2
+  - [-1, 1, ODConv, [128, 3, 2]]     # 1-P2/4, BD-YOLOv8s: ODConv replaces second Conv
+  - [-1, 3, C2f, [128, True]]        # 2
+  - [-1, 1, CBAM, []]                # 3, CBAM after first C2f
+  - [-1, 1, Conv, [256, 3, 2]]       # 4-P3/8
+  - [-1, 6, C2f, [256, True]]        # 5
+  - [-1, 1, CBAM, []]                # 6, CBAM after second C2f
+  - [-1, 1, Conv, [512, 3, 2]]       # 7-P4/16
+  - [-1, 6, C2f, [512, True]]        # 8
+  - [-1, 1, Conv, [1024, 3, 2]]      # 9-P5/32
+  - [-1, 3, C2f, [1024, True]]       # 10
+  - [-1, 1, SPPF, [1024, 5]]         # 11
+
+# YOLOv8s head with CARAFE replacing nearest-neighbor upsampling
+head:
+  - [-1, 1, CARAFE, [2, 5, 64]]      # 12, P5 -> P4
+  - [[-1, 8], 1, Concat, [1]]        # 13 cat backbone P4
+  - [-1, 3, C2f, [512]]              # 14
+
+  - [-1, 1, CARAFE, [2, 5, 64]]      # 15, P4 -> P3
+  - [[-1, 6], 1, Concat, [1]]        # 16 cat backbone P3 with CBAM
+  - [-1, 3, C2f, [256]]              # 17, P3/8 small
+
+  - [-1, 1, Conv, [256, 3, 2]]       # 18
+  - [[-1, 14], 1, Concat, [1]]       # 19 cat head P4
+  - [-1, 3, C2f, [512]]              # 20, P4/16 medium
+
+  - [-1, 1, Conv, [512, 3, 2]]       # 21
+  - [[-1, 11], 1, Concat, [1]]       # 22 cat backbone P5
+  - [-1, 3, C2f, [1024]]             # 23, P5/32 large
+
+  - [[17, 20, 23], 1, Detect, [nc]]  # 24 Detect(P3, P4, P5)

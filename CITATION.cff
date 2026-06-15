@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the corresponding manuscript."
+title: "YOLO11-FR: A bridge crack detection method based on frequency-domain fusion and an edge enhancement mechanism"
+type: software
+authors:
+  - family-names: Zhang
+    given-names: Yangming
+  - family-names: Tian
+    given-names: Baohui
+  - family-names: Guo
+    given-names: Hufeng
+version: 1.0.0
+date-released: 2026-06-15
+abstract: "Author-generated code for YOLO11-FR, a bridge crack detection method based on frequency-domain fusion and an edge enhancement mechanism."
+keywords:
+  - bridge crack detection
+  - YOLO11
+  - frequency-domain fusion
+  - edge enhancement
+  - object detection

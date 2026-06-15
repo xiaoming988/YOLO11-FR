@@ -1,0 +1,55 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Training outputs and logs
+runs/
+runs_fasterrcnn/
+logs/
+logs_crack500/
+wandb/
+*.log
+
+# Datasets and large generated files
+datasets/
+data/
+weights/
+*.pt
+*.pth
+*.onnx
+*.engine
+*.tflite
+*.pb
+*.mlmodel
+*.torchscript
+*.zip
+*.rar
+*.7z
+
+# Temporary files
+*.tmp
+*.bak
+*.cache
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
