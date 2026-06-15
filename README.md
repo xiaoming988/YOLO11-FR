@@ -183,20 +183,22 @@ CRACK500_YOLO/
 Example command for training YOLO11-FR:
 
 ```bash
-yolo detect train model=ultralytics/cfg/models/11/yolo11_FFCM_REEM.yaml data=path/to/data.yaml epochs=100 imgsz=640 batch=16 seed=0
+yolo detect train model=ultralytics/cfg/models/11/yolo11_FFCM_REEM.yaml data=path/to/data.yaml epochs=100 imgsz=640 batch=16 seed=0 amp=False
 ```
 
 For GYU-DET-Crack:
 
 ```bash
-yolo detect train model=ultralytics/cfg/models/11/yolo11_FFCM_REEM.yaml data=path/to/GYU_DET_Crack.yaml epochs=100 imgsz=640 batch=16 seed=0
+yolo detect train model=ultralytics/cfg/models/11/yolo11_FFCM_REEM.yaml data=path/to/GYU_DET_Crack.yaml epochs=100 imgsz=640 batch=16 seed=0 amp=False
 ```
 
 For Crack500:
 
 ```bash
-yolo detect train model=ultralytics/cfg/models/11/yolo11_FFCM_REEM.yaml data=path/to/CRACK500_YOLO/crack500.yaml epochs=100 imgsz=640 batch=16 seed=0
+yolo detect train model=ultralytics/cfg/models/11/yolo11_FFCM_REEM.yaml data=path/to/CRACK500_YOLO/crack500.yaml epochs=100 imgsz=640 batch=16 seed=0 amp=False
 ```
+
+Automatic mixed precision is disabled during training by setting `amp=False`, which is recommended for stable training of the REEM-related models in this repository.
 
 ## Evaluation
 
@@ -238,10 +240,22 @@ ultralytics/cfg/models/11/yolo11_REEM_noStripe.yaml
 ultralytics/cfg/models/11/yolo11_FFCM_REEM.yaml
 ```
 
-Example command:
+Example command for the REEM variant:
 
 ```bash
-yolo detect train model=ultralytics/cfg/models/11/yolo11_REEM.yaml data=path/to/GYU_DET_Crack.yaml epochs=100 imgsz=640 batch=16 seed=0
+yolo detect train model=ultralytics/cfg/models/11/yolo11_REEM.yaml data=path/to/GYU_DET_Crack.yaml epochs=100 imgsz=640 batch=16 seed=0 amp=False
+```
+
+Example command for the FFCM variant:
+
+```bash
+yolo detect train model=ultralytics/cfg/models/11/yolo11_FFCM.yaml data=path/to/GYU_DET_Crack.yaml epochs=100 imgsz=640 batch=16 seed=0 amp=False
+```
+
+Example command for the complete YOLO11-FR model:
+
+```bash
+yolo detect train model=ultralytics/cfg/models/11/yolo11_FFCM_REEM.yaml data=path/to/GYU_DET_Crack.yaml epochs=100 imgsz=640 batch=16 seed=0 amp=False
 ```
 
 ## Repeated-seed experiments
@@ -259,8 +273,10 @@ seed 2
 Example command:
 
 ```bash
-yolo detect train model=ultralytics/cfg/models/11/yolo11_FFCM_REEM.yaml data=path/to/GYU_DET_Crack.yaml epochs=100 imgsz=640 batch=16 seed=1
+yolo detect train model=ultralytics/cfg/models/11/yolo11_FFCM_REEM.yaml data=path/to/GYU_DET_Crack.yaml epochs=100 imgsz=640 batch=16 seed=1 amp=False
 ```
+
+For another random seed, modify the `seed` value accordingly.
 
 ## Notes on pretrained weights
 
